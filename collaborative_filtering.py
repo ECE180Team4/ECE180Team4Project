@@ -12,7 +12,9 @@ def pearson(dataA, dataB, significanceWeighting = False):
     if len(intersection) == 0:
         return 0
     meanA = np.mean([dataA[obj] for obj in dataA.keys()])
+    assert(isinstance(meanA,np.ndarray))
     meanB = np.mean([dataB[obj] for obj in dataB.keys()])
+    assert(isinstance(meanB,np.ndarray))
     numerator = sum([(dataA[obj] - meanA) * (dataB[obj] - meanB) for obj in intersection])
     deviationA = sqrt(sum([(dataA[obj] - meanA) ** 2 for obj in intersection]))
     deviationB = sqrt(sum([(dataB[obj] - meanB) ** 2 for obj in intersection]))
@@ -48,6 +50,10 @@ class collaborativeFiltering():
         return list(parseData('review.json'))
     
     def construct_matrix(self,review):
+        '''construct three matrices: this is the dictionary implementation
+        for UserList, key is the user_id and value is a dictionary of restaurant:rating pair
+        for ItemList, key is the rest_id and value is a dictionary of user:rating pair
+        for RatingList, key is a tuple consists of user_id rest_id pair and value is the corresponding rating'''
         UserList = {} # 
         ItemList = {} # store all user-rating pair for specific item
         RatingList = {}
